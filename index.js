@@ -12,12 +12,18 @@ const app = express();
 app.use(bodyParser.json())
 // Middleware
 app.use(express.json());  // Parse incoming JSON requests
-app.use(cors());
+const frontendURL = 'https://final-qr-update.vercel.app/';
 
+// CORS configuration
+const corsOptions = {
+  origin: frontendURL, // Allow your frontend to access the backend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allow all desired HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+  credentials: true, // Allow cookies or credentials if needed
+};
 
-console.log(path.join(__dirname, 'uploads'));  // Log the full path to the uploads directory
-
-
+// Use CORS middleware with the options
+app.use(cors(corsOptions));
 
 // MongoDB Connection using Mongoose
 const connectDB = async () => {
